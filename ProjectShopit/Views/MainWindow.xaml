@@ -3,11 +3,129 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ProjectShopit.Views"
+        xmlns:shopViews="clr-namespace:ProjectShopit.ShopViews"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Label Content="Seite 2&#xD;&#xA;" HorizontalAlignment="Left" Margin="320,135,0,0" VerticalAlignment="Top"/>
+        Title="ShopIt" 
+        Height="900" 
+        Width="1500" 
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        
+        >
+    
+    <Window.Resources>
+        <!--Binding für die ItemList ansicht -->
+        <DataTemplate x:Name="ItemList" DataType="{x:Type shopViews:ItemList}">
+            <shopViews:ItemList DataContext="{Binding}"/>
+        </DataTemplate>
+    </Window.Resources>
 
+    <Grid>
+        <!--Leiste Oben -->
+        <StackPanel
+            Orientation="Horizontal" 
+            HorizontalAlignment="Left" 
+            Height="33.333" 
+            Margin="331,10,0,0"
+            VerticalAlignment="Top" 
+            Width="798.5"
+            >
+            
+            <Button
+                Content="Aktionen" 
+                Height="30" 
+                Margin="0,0,10,0" 
+                Width="150"
+            />
+            
+            <Button 
+                Click="ItemlistButton_Clicked" 
+                Content="Kategorieen" 
+                Height="30" 
+                Margin="0,0,10,0" 
+                Width="150"
+                />
+            
+            <Button 
+                Content="Bestellverlauf" 
+                Height="30" 
+                Margin="0,0,10,0" 
+                Width="150"
+                />
+            
+            <Button 
+                Content="Benutzer" 
+                Height="30" 
+                Margin="0,0,10,0" 
+                Width="150"
+                />
+            
+            <Button 
+                Content="Einstellungen" 
+                Height="30" 
+                Margin="0,0,10,0" 
+                Width="150"
+                />
+            
+        </StackPanel>
+        
+        <!--Content Control für die Ansichten -->
+        <ContentControl Content="{Binding}" Margin="10,48,10,38" />
+        
+        <!--Leiste Unten -->
+        <StackPanel HorizontalAlignment="Left" Height="23.333" Margin="10,835.667,0,0" VerticalAlignment="Top" Width="1472" Orientation="Horizontal" Background="White" OpacityMask="Black">
+            <Label 
+                Content="Version :" 
+                Width="56.347"
+                />
+            
+            <Label 
+                Content="0.01.0033"
+                />
+            
+            <GridSplitter 
+                Width="326" 
+                Background="White"
+                />
+            
+            <Label 
+                Content="Suchen"
+                />
+            
+            <TextBox 
+                Width="363.5"
+                />
+            
+            <GridSplitter 
+                Width="342.5" 
+                Background="White"
+                />
+            
+            <Label 
+                Width="61.75" 
+                Height="23.333" 
+                VerticalAlignment="Bottom" 
+                Background="White" 
+                Content="Benutzer:"
+                />
+            
+            <Label 
+                Content="BenEarth"
+                />
+            
+            <GridSplitter 
+                Width="60.5" 
+                Background="White"
+                />
+            
+            <Label 
+                Content="12:34"
+                />
+            
+            <Label 
+                Content="Uhr"
+                />
+            
+        </StackPanel>
     </Grid>
 </Window>

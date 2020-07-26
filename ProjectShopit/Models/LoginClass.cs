@@ -1,47 +1,47 @@
-﻿using ProjectShopit.Views;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace ProjectShopit.Models
 {
     public class LoginClass
     {
-        public string userName { get; set; }
-        public string passwordText { get; set; }
-
-        public bool isLogin { get; set; } = false;
-
-        public bool LoginDone(string uString,string pString)
+        SqlConnection sqlConnection;
+        public LoginWindow()
         {
-           this.userName = uString.Trim();
-           this.passwordText = pString.Trim();
-           
-            if(userName != String.Empty && passwordText != String.Empty)
+            string connectionString = ConfigurationManager.ConnectionStrings["ProjectShopit.Properties.Settings.benearthConnectionString"].ConnectionString;
+            sqlConnection = new SqlConnection(connectionString);
+        }
+
+        public void GetUserData()
+        {
+            try
             {
-                if(userName == "ben" && passwordText == "united")
+                SqlCommand sqlCommand = new SqlCommand("select * from Benutzer where UserName=@userName and UserPassword =@userPassword", sqlConnection);
+                sqlCommand.Parameters.AddWithValue("@userName", UBox.Text);
+                sqlCommand.Parameters.AddWithValue("@userPassword", PBox.Password);
+                Console.WriteLine(PBox.Password);
+                sqlConnection.Open();
+                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
+                DataSet dataSet = new DataSet();
+                sqlDataAdapter.Fill(dataSet);
+                sqlConnection.Close();
+                int count = dataSet.Tables[0].Rows.Count;
+                if (count == 1)
                 {
-                    MessageBox.Show("Wilkommen");
-                    isLogin = true;                }
+                    MessageBox.Show("Login hat geklappt");
+                }
                 else
                 {
-                    MessageBox.Show("Benutzername und Passwort stimmen nicht überein");
-                    isLogin = false;
+                    MessageBox.Show($"Login hat nicht geklappt. Der Nutzer name {UBox.Text} und das PW {PBox.Password}");
                 }
-            }
-            else
-            {
-                MessageBox.Show("Bitte geben Sie etwas ein");
-                isLogin = false;
-            }
 
-            return isLogin;
+            }
+            catch (Exception e)
+            {
+
+                MessageBox.Show(e.ToString());
+            }
         }
     }
-
-
-
 }
